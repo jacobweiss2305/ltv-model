@@ -26,26 +26,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Project pipelines."""
-from typing import Dict
+"""Complete Data Processing pipeline for the spaceflights tutorial"""
 
-from kedro.pipeline import Pipeline
-
-from process.pipelines import data_processing as dp
-from process.pipelines import data_science as ds
-
-def register_pipelines() -> Dict[str, Pipeline]:
-    """Register the project's pipelines.
-
-    Returns:
-        A mapping from a pipeline name to a ``Pipeline`` object.
-
-    """
-    data_processing_pipeline = dp.create_pipeline()
-    data_science_pipeline = ds.create_pipeline()
-
-    return {
-        "__default__": data_processing_pipeline + data_science_pipeline,
-        "dp": data_processing_pipeline,
-        "ds": data_science_pipeline,
-    }
+from .pipeline import create_pipeline  # NOQA

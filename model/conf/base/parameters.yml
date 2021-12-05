@@ -1,0 +1,9 @@
+feature_engineering_map: {'state': 'label',
+                           'gender': 'label',
+                           'is_married': 'label',
+                           'promo_group_1': 'label',
+                           'promo_group_2': 'label',
+                           'age': 'continuous',
+                           'income': 'continuous',
+                           'customer_loyalty_index': 'continuous',
+                           'brand_awareness_index': 'continuous'}

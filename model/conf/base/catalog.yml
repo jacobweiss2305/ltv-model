@@ -2,3 +2,15 @@
 #
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
+
+customers:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/customers.csv
+  load_args:
+    index_col: 0
+
+transactions:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/transactions.csv
+  load_args:
+    index_col: 0
