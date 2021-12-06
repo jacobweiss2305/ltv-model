@@ -8,6 +8,7 @@ import pandas as pd
 from joblib import Parallel, delayed
 from sklearn import preprocessing
 from statsmodels.stats.outliers_influence import variance_inflation_factor
+from causalnex.discretiser import Discretiser
 
 logger = logging.getLogger(__name__)
 
@@ -116,3 +117,17 @@ def standardized_feature_table(response: pd.DataFrame, cont_features: pd.DataFra
     """
     vif = _calculate_vif(pd.concat([cat_features, cont_features], axis=1))
     return pd.concat([response, vif], axis=1)
+
+def discretiser(discretised_data: pd.DataFrame) -> pd.DataFrame:
+    """Discretise data into bins for condition probability distributions. We do this to avoid combinatorial explosion.
+
+    Args:
+        discretised_data (pd.DataFrame): aggregate peaks data or feature table
+
+    Returns:
+        pd.DataFrame: discrete feature table
+    """    
+    for col in ['rolling_6_month_ltv', 'state_label', 'age', 'income', 'customer_loyalty_index', 'brand_awareness_index']:
+        discretised_data[col] = Discretiser(method="fixed",
+                                numeric_split_points=[discretised_data[col].quantile(i) for i in np.arange(.1, 1., .1)]).transform(discretised_data[col].values)
+    return discretised_data
