@@ -13,7 +13,7 @@ Can we build an accurate machine learning model to predict next 6 month LTV at c
   - source venv/bin/activate
   - If you want to run Causal Graphical Model and Bayesian Network:
     - Please see installation guide for pygraphiz: https://pygraphviz.github.io/documentation/stable/install.html
-  - To spin up Jupyter lab via kedro:
+  - __To spin up Jupyter lab you must use kedro__:
        ```
        cd ./ltv_model/model/
 
