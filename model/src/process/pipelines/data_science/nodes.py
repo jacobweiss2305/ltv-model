@@ -9,20 +9,41 @@ from sklearn.metrics import explained_variance_score, mean_squared_error
 from sklearn.model_selection import train_test_split
 
 
-def _split_data(feature_table: pd.DataFrame, response: str) -> Tuple:
+def _split_data(feature_table: pd.DataFrame, response: str, test_size: float) -> Tuple:
+    """Split data into train and test set using scikit learn package.
+
+    Args:
+        feature_table (pd.DataFrame): standardized feature table
+        response (str): 6 month rolling ltv
+        test_size (float): Percentage of test size
+
+    Returns:
+        Tuple: X_train, X_test, y_train, y_test
+    """    
     feature_names = [i for i in list(feature_table) if response != i]
     X = feature_table[feature_names]
     y = feature_table[response]
     X_train, X_test, y_train, y_test = train_test_split(
         X,
         y,
-        test_size=0.2,
+        test_size=test_size,
         random_state=42
     )
     return X_train, X_test, y_train, y_test
 
 
 def gradientBoostingRegressor(X_train, X_test, y_train, y_test):
+    """Gradient Boosting Regression model
+
+    Args:
+        X_train ([type]): [description]
+        X_test ([type]): [description]
+        y_train ([type]): [description]
+        y_test ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """    
     params = {
         "n_estimators": 500,
         "max_depth": 4,

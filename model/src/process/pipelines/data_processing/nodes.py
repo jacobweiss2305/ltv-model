@@ -29,7 +29,7 @@ def target_variable(transactions: pd.DataFrame) -> pd.DataFrame:
 
 
 def continuous_variables(df: pd.DataFrame, parameters: Dict) -> pd.DataFrame:
-    """Scale continuous variables with mean imputation
+    """Scale continuous variables using scikit learn Standard Scaler with mean imputation
 
     Args:
         df (pd.DataFrame): raw feature table
@@ -48,7 +48,7 @@ def continuous_variables(df: pd.DataFrame, parameters: Dict) -> pd.DataFrame:
 
 
 def categorical_variables(df: pd.DataFrame, parameters: Dict) -> Tuple:
-    """Convert categorical variables to continuous variables
+    """Convert categorical variables to continuous variables using scikit learn label encoder. Also provide label encode mapping as seperate mapping.
 
     Args:
         df (pd.DataFrame): dense raw features
