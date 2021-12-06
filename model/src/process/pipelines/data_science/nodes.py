@@ -8,6 +8,7 @@ from sklearn.feature_selection import RFE
 from sklearn.metrics import explained_variance_score, mean_squared_error
 from sklearn.model_selection import train_test_split
 from sklearn.inspection import permutation_importance
+from sklearn.tree import DecisionTreeRegressor, plot_tree
 
 
 def _split_data(feature_table: pd.DataFrame, response: str, test_size: float) -> Tuple:
@@ -51,7 +52,7 @@ def gradientBoostingRegressor(X_train: pd.DataFrame, X_test: pd.DataFrame, y_tra
 
     Returns:
         GradientBoostingRegressor: scikit learn object
-        pd.DataFrame: Model Evaluation Metrics
+        Dict: Model Evaluation Metrics
     """    
     params = {
         "n_estimators": 500,
@@ -59,7 +60,7 @@ def gradientBoostingRegressor(X_train: pd.DataFrame, X_test: pd.DataFrame, y_tra
         "min_samples_split": 5,
         "learning_rate": 0.01
     }
-
+    #TODO Add HistGradientBoostingRegressor
     model = GradientBoostingRegressor(**params)
     sfm = RFE(model, n_features_to_select=4)
     sfm.fit(X_train, np.ravel(y_train))
@@ -124,4 +125,36 @@ def gradientBoostingRegressor(X_train: pd.DataFrame, X_test: pd.DataFrame, y_tra
     fig.tight_layout()
     plt.show()
 
+    return model, metrics
+
+def DecisionTree(X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.DataFrame, y_test: pd.DataFrame) -> Any:
+    """Scikit Learn Decision Tree Regression Model.
+
+    Args:
+        X_train (pd.DataFrame): Feature training set
+        X_test (pd.DataFrame): Feature test set
+        y_train (pd.DataFrame): Response training set
+        y_test (pd.DataFrame): Response testing set
+
+    Returns:
+        DecisionTreeRegressor: scikit learn object
+        Dict: Model Evaluation Metrics
+    """    
+    params = {
+        "max_depth": 4,
+        "random_state": 42,
+        "max_leaf_nodes": 4
+    }
+    model = DecisionTreeRegressor(**params)
+    model.fit(X_train, y_train)
+
+    print('Base model with all features ...')
+    plot_tree(model,feature_names = list(X_train))
+
+    y_pred = model.predict(X_test)
+    mse = mean_squared_error(y_test, model.predict(X_test))
+    var = explained_variance_score(y_test, y_pred)
+    print("MSE: {:.4f}".format(mse))
+    print("Explained variance: {:.3f}".format(var))
+    metrics = {"model": "Gradient Boost", "metrics": {"mse": mse, "explained variance": var}}
     return model, metrics
