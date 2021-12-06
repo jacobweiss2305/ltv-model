@@ -75,7 +75,7 @@ def categorical_variables(df: pd.DataFrame, parameters: Dict) -> Tuple:
 
 
 def _calculate_vif(feature_table: pd.DataFrame, thresh=5.0) -> pd.DataFrame:
-    """Remove multicollinearity in feature table using vif
+    """Remove multicollinearity in feature table using vif with a threshold of 5.0 (leverages parallel runs).
 
     Args:
         feature_table (pd.DataFrame): standardized feature table
