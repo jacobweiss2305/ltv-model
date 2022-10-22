@@ -1,5 +1,9 @@
 # Lifetime Value Model
 
+Estimating lifetime value using machine learning.
+
+Wrapped in Kedro for deployment.
+
 ## Overview
 Can we build an accurate machine learning model to predict next 6 month LTV at customer level?
 
